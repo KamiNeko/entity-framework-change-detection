@@ -1,2 +1,3 @@
 # entity-framework-change-detection
-How to detect changes with Entity Framework
+A sample project to demonstrate one possibility to use the Entity Framework change tracker for own purposes.
+Also see https://shyomeblog.wordpress.com/2017/07/16/utilizing-entity-framework-change-detection-for-own-purposes-part-1/
