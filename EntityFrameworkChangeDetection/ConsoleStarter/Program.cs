@@ -9,13 +9,13 @@ namespace ConsoleStarter
         static void Main(string[] args)
         {
             var connectionString = ConnectionStringBuilder.CreateDatabaseConnectionString();
-
+            
             using (var dbContext = new DatabaseContext(connectionString))
             {
                 var customer = new Customer
                 {
                     Firstname = "Peter",
-                    Lastname = "Parker"
+                    Lastname = "Miller"
                 };
 
                 var contract = new Contract
@@ -34,10 +34,11 @@ namespace ConsoleStarter
                 }
 
                 customer.Firstname = "Simon";
+                contract.Note = "Contract duration changed";
 
                 if (dbContext.SaveChanges() <= 0)
                 {
-                    throw new InvalidOperationException("Could not update customer");
+                    throw new InvalidOperationException("Could not update customer / contract");
                 }
 
                 customer.Contracts.Remove(contract);

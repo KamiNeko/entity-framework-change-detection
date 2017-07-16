@@ -44,6 +44,7 @@ namespace Data.Controllers
         {
             var objectContextAdapter = (IObjectContextAdapter)this;
             var objectContext = objectContextAdapter.ObjectContext;
+            objectContext.DetectChanges();
 
             SearchForAddedEntries(objectContext);
             SearchForUpdatedEntries(objectContext);
