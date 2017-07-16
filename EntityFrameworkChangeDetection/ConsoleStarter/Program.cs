@@ -12,6 +12,10 @@ namespace ConsoleStarter
             
             using (var dbContext = new DatabaseContext(connectionString))
             {
+                dbContext.EntityAdded += DbContext_EntityAdded;
+                dbContext.EntityModified += DbContext_EntityModified;
+                dbContext.EntityRemoved += DbContext_EntityRemoved;
+
                 var customer = new Customer
                 {
                     Firstname = "Peter",
@@ -56,6 +60,28 @@ namespace ConsoleStarter
                     throw new InvalidOperationException("Could not remove customer");
                 }
             }
+
+            Console.ReadLine();
         }
+
+        private static void DbContext_EntityAdded(object sender, Data.Events.DatabaseEntityAddedEventArgs e)
+        {
+            Console.WriteLine("ADDED: " + e.ModelTypeName + " with ID " + e.Model.Id);
+        }
+
+        private static void DbContext_EntityModified(object sender, Data.Events.DatabaseEntityModifiedEventArgs e)
+        {
+            Console.WriteLine("MODIFIED: " + e.ModelTypeName + " with ID " + e.Model.Id);
+
+            foreach (var changedProperty in e.ChangedProperties)
+            {
+                Console.WriteLine("CHANGED: " + changedProperty.PropertyName + " FROM " + changedProperty.ValueBeforeChange + " TO " + changedProperty.ValueAfterChange);
+            }
+        }
+
+        private static void DbContext_EntityRemoved(object sender, Data.Events.DatabaseEntityRemovedEventArgs e)
+        {
+            Console.WriteLine("REMOVED: " + e.ModelTypeName + " with ID " + e.Model.Id);
+        } 
     }
 }
